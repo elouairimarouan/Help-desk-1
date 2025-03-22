@@ -68,7 +68,7 @@ export function AppSidebar() {
           </SidebarMenuItem></>
           }
 {
- user.role == 0 &&  <SidebarMenuItem>
+ user?.role == 0 &&  <SidebarMenuItem>
  <SidebarMenuSubButton asChild className="flex items-center gap-2">
    <Link to="/my-tickets">
    <Ticket className="size-4" />

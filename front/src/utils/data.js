@@ -75,4 +75,87 @@ export const staticTickets = [
     {id : 2, name : 'service2'},
     {id : 3, name : 'service3'},
   ]
+export const users = [
+  {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "johndoe@example.com",
+    "is_active": true,
+    "role": 1,
+    "image_url": "https://randomuser.me/api/portraits/men/1.jpg"
+  },
+  {
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "email": "janesmith@example.com",
+    "is_active": false,
+    "role": 0,
+    "image_url": "https://randomuser.me/api/portraits/women/2.jpg"
+  },
+  {
+    "first_name": "Alice",
+    "last_name": "Johnson",
+    "email": "alicejohnson@example.com",
+    "is_active": true,
+    "role": 1,
+    "image_url": "https://randomuser.me/api/portraits/women/3.jpg"
+  },
+  {
+    "first_name": "Michael",
+    "last_name": "Brown",
+    "email": "michaelbrown@example.com",
+    "is_active": true,
+    "role": 0,
+    "image_url": "https://randomuser.me/api/portraits/men/4.jpg"
+  },
+  {
+    "first_name": "Emily",
+    "last_name": "Davis",
+    "email": "emilydavis@example.com",
+    "is_active": false,
+    "role": 0,
+    "image_url": "https://randomuser.me/api/portraits/women/5.jpg"
+  },
+  {
+    "first_name": "Daniel",
+    "last_name": "Wilson",
+    "email": "danielwilson@example.com",
+    "is_active": true,
+    "role": 1,
+    "image_url": "https://randomuser.me/api/portraits/men/6.jpg"
+  },
+  {
+    "first_name": "Sophia",
+    "last_name": "Martinez",
+    "email": "sophiamartinez@example.com",
+    "is_active": true,
+    "role": 1,
+    "image_url": "https://randomuser.me/api/portraits/women/7.jpg"
+  },
+  {
+    "first_name": "James",
+    "last_name": "Garcia",
+    "email": "jamesgarcia@example.com",
+    "is_active": false,
+    "role": 0,
+    "image_url": "https://randomuser.me/api/portraits/men/8.jpg"
+  },
+  {
+    "first_name": "Olivia",
+    "last_name": "Anderson",
+    "email": "oliviaanderson@example.com",
+    "is_active": true,
+    "role": 1,
+    "image_url": "https://randomuser.me/api/portraits/women/9.jpg"
+  },
+  {
+    "first_name": "William",
+    "last_name": "Taylor",
+    "email": "williamtaylor@example.com",
+    "is_active": false,
+    "role": 0,
+    "image_url": "https://randomuser.me/api/portraits/men/10.jpg"
+  }
+]
+
   
