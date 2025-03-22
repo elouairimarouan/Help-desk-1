@@ -1,84 +1,84 @@
-import * as React from "react"
-import { AppSidebar } from "@/components/sidebar/app-sidebar"
-
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import React, { useEffect, useState } from "react";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
 
 import {
   SidebarInset,
   SidebarProvider,
-} from "@/components/ui/sidebar"
-import Path from "../components/sidebar/path"
+} from "@/components/ui/sidebar";
+import Path from "../components/sidebar/path";
+import { Loader } from "lucide-react";
+import { AjouterTicket } from "../components/dialog/ajouter-ticket";
+import TicketItem from "../components/ticket-item";
+import { staticTickets } from "../utils/data";
 
-const invoices = [
-  { invoice: "INV001", paymentStatus: "Paid", totalAmount: "$250.00", paymentMethod: "Credit Card" },
-  { invoice: "INV002", paymentStatus: "Pending", totalAmount: "$150.00", paymentMethod: "PayPal" },
-  { invoice: "INV003", paymentStatus: "Unpaid", totalAmount: "$350.00", paymentMethod: "Bank Transfer" },
-  { invoice: "INV004", paymentStatus: "Paid", totalAmount: "$450.00", paymentMethod: "Credit Card" },
-  { invoice: "INV005", paymentStatus: "Paid", totalAmount: "$550.00", paymentMethod: "PayPal" },
-  { invoice: "INV006", paymentStatus: "Pending", totalAmount: "$200.00", paymentMethod: "Bank Transfer" },
-  { invoice: "INV007", paymentStatus: "Unpaid", totalAmount: "$300.00", paymentMethod: "Credit Card" },
-]
+// Liste des tickets statiques
+
+
 
 export default function NewTickets() {
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  
+
+  // const fetchTickets = async () => {
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  // const response = []
+  //     // const response = await axios.get(
+  //     //   "https://c940-196-64-172-50.ngrok-free.app/api/tickets",
+  //     //   { headers: { Authorization: `Bearer ${token}` } }
+  //     // );
+  //     // Fusionner les tickets de l'API avec les tickets statiques
+  //     setTickets([...staticTickets, ...response?.data]);
+  //   } catch (err) {
+  //     console.error("Erreur lors de la récupération des tickets:", err);
+  //     toast.error("Impossible de charger les tickets.")
+  //     // Si l'API échoue, on affiche quand même les tickets statiques
+  //     setTickets(staticTickets);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchTickets();
+  // }, []);
+ 
+
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset> 
+
         <Path path1="Home" path2="NewTickets" />
-        <div className="grid md:grid-cols-3 gap-5 p-4 pt-0">
-          {invoices.map((invoice) => (
-            <Card key={invoice.invoice} >
-              <CardHeader>
-                <CardTitle>{invoice.invoice}</CardTitle>
-                <CardDescription>Status: {invoice.paymentStatus}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label>Total Amount</Label>
-                    <Input value={invoice.totalAmount} disabled />
-                  </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label>Payment Method</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder={invoice.paymentMethod} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="credit_card">Credit Card</SelectItem>
-                        <SelectItem value="paypal">PayPal</SelectItem>
-                        <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <p className='line-clamp-1 md:line-clamp-2 text-justify'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt repellat aspernatur consequuntur illum repellendus facere dignissimos cum dolorem laboriosam exercitationem sit soluta adipisci, numquam maiores. Distinctio velit voluptates libero facilis.</p>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button variant="outline">Cancel</Button>
-                <Button>Confirm</Button>
-              </CardFooter>
-            </Card>
-          ))}
+        <div className="p-4  pt-0">
+              
+           <AjouterTicket/>
+          {error && <div className="text-red-500  text-center mb-4">{error}</div>}
+
+          {loading ? (
+            
+            <div className="flex justify-center roun items-center py-10">
+              <Loader className="animate-spin  w-8 h-8 text-gray-500" />
+            </div>
+          ) : (
+
+            <div className="mt-5  grid md:grid-cols-3 gap-5">
+
+                {staticTickets.length > 0 ? (
+                staticTickets.map((ticket, index) => (
+                  <TicketItem key={index} ticket={ticket} />
+                ))
+              ) : (
+                <p className="text-center text-gray-500">Aucun ticket disponible.</p>
+              )}
+            </div>
+          )}
         </div>
+
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
+

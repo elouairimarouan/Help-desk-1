@@ -12,51 +12,60 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/api/auth-api";
+import { Loader2 } from "lucide-react";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("admin");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const {loginStatus, isLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const response = await axios.post(
-        "https://c940-196-64-172-50.ngrok-free.app/api/login/",
-        { email, password }
-      );
-
-      if (response.data.access_token) {
-        localStorage.setItem("authToken", response.data.access_token);
-        localStorage.setItem("refreshToken", response.data.refresh_token);
-        localStorage.setItem("userRole", response.data.role); // Store the role
-
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.access_token}`;
-
-        // Redirect based on role
-        if (response.data.role === 0) {
-          navigate("/ticketsUser");
-        } else if (response.data.role === 1) {
-          navigate("/ticketsAdmin");
-        }
-      } else {
-        setError("Login successful, but no token received.");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError(error.response?.data?.error || "Invalid credentials.");
-    } finally {
-      setLoading(false);
+    dispatch(loginUser({email, password}));
+    if (loginStatus) {
+      navigate("/new-tickets");
     }
+
+
+    // try {
+    //   const response = await axios.post(
+    //     "https://c940-196-64-172-50.ngrok-free.app/api/login/",
+    //     { email, password }
+    //   );
+
+    //   if (response.data.access_token) {
+    //     localStorage.setItem("authToken", response.data.access_token);
+    //     localStorage.setItem("refreshToken", response.data.refresh_token);
+    //     localStorage.setItem("userRole", response.data.role); // Store the role
+
+    //     axios.defaults.headers.common[
+    //       "Authorization"
+    //     ] = `Bearer ${response.data.access_token}`;
+
+    //     // Redirect based on role
+    //     if (response.data.role === 0) {
+    //       navigate("/ticketsUser");
+    //     } else if (response.data.role === 1) {
+    //       navigate("/ticketsAdmin");
+    //     }
+    //   } else {
+    //     setError("Login successful, but no token received.");
+    //   }
+    // } catch (error) {
+    //   console.error("Login error:", error);
+    //   setError(error.response?.data?.error || "Invalid credentials.");
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -116,11 +125,8 @@ export default function Login() {
                     </span>
                   </div>
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Logging in..." : "Login"}
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Login with Google
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? <Loader2 className="animate-spin"/> : "Login"}
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
