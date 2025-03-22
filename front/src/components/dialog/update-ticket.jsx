@@ -171,7 +171,7 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               {loading ? (
                 <>
                   <Loader2 className="animate-spin mr-2" />
-                  Update en cours...
+                  {/* Update en cours... */}
                 </>
               ) : (
                 "Confirm"

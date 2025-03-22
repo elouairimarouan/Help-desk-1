@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -20,13 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label"; // Import Label
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import axiosInstance from "../../utils/axiosInstance";
 import { services } from "../../utils/data";
-import { Eye, FilePen, Loader2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { Eye } from "lucide-react";
 
 export function ViewTicket({ ticket }) {
   const [formData, setFormData] = useState({
@@ -37,8 +35,37 @@ export function ViewTicket({ ticket }) {
   });
   const [open, setOpen] = useState(false);
 
-  // Update formData when the ticket prop changes
+  // Fonction pour mapper les statuts à des libellés en français
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case "en_attent":
+        return "En attente";
+      case "resolu":
+        return "Résolu";
+      case "en_cours":
+        return "En cours";
+      case "annuler":
+        return "Annulé";
+      default:
+        return "Inconnu";
+    }
+  };
 
+  // Fonction pour obtenir la couleur en fonction du statut
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "en_attent":
+        return "bg-yellow-500 text-white"; // Jaune pour "En attente"
+      case "resolu":
+        return "bg-green-500 text-white"; // Vert pour "Résolu"
+      case "en_cours":
+        return "bg-blue-500 text-white"; // Bleu pour "En cours"
+      case "annuler":
+        return "bg-red-600 text-white"; // Rouge pour "Annulé"
+      default:
+        return "bg-gray-500 text-white"; // Gris par défaut
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -74,7 +101,7 @@ export function ViewTicket({ ticket }) {
             <Select
               value={formData.service}
               onValueChange={(value) => setFormData({ ...formData, service: value })}
-              disabled // Disable the Select component
+              disabled
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Sélectionner un service" />
@@ -108,14 +135,9 @@ export function ViewTicket({ ticket }) {
           {/* Status Field */}
           <div className="grid gap-2">
             <Label htmlFor="status">Statut du ticket</Label>
-            <Input
-              placeholder="Statut du ticket"
-              id="status"
-              name="status"
-              value={formData.status}
-              disabled
-              required
-            />
+            <div className={`p-2 rounded-sm ${getStatusColor(formData.status)}`}>
+              {getStatusLabel(formData.status)}
+            </div>
           </div>
         </form>
       </DialogContent>

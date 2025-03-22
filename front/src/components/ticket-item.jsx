@@ -10,6 +10,20 @@ import moment from 'moment/moment';
 import "moment/locale/fr";
 import { ViewTicket } from './dialog/view-ticket';
 function TicketItem({ ticket, fetchTickets }) {
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case "en_attent":
+        return "En attente";
+      case "resolu":
+        return "Résolu";
+      case "en_cours":
+        return "En cours";
+      case "annuler":
+        return "Annulé";
+      default:
+        return "Inconnu";
+    }
+  };
   const getStatusColor = (status) => {
     switch (status) {
         case "annuler":
@@ -49,7 +63,7 @@ function TicketItem({ ticket, fetchTickets }) {
         </CardTitle>
         <CardDescription className={getStatusColor(ticket.status)}>
         
-          Status: {ticket.status}  {getStatusIcon(ticket.status)}
+          Status:   {getStatusLabel(ticket.status)}  {getStatusIcon(ticket.status)}
         </CardDescription>
       </CardHeader>
       <CardContent>

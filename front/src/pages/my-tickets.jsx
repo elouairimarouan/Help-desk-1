@@ -7,6 +7,7 @@ import { AjouterTicket } from "../components/dialog/ajouter-ticket";
 import TicketItem from "../components/ticket-item";
 import axiosInstance from "../utils/axiosInstance";
 import { toast } from "sonner";
+import SearchTickets from "../components/search-tickets";
 
 function MyTickets() {
   const [staticTickets, setTickets] = useState([]);
@@ -38,6 +39,10 @@ function MyTickets() {
         <Path path1="Home" path2="NewTickets" />
         <div className="p-4 pt-0">
           <AjouterTicket fetchTickets={fetchTickets} />
+          <div className="mr-4">
+              <SearchTickets/>
+          </div>
+
 
           {loading ? (
             <div className="flex justify-center items-center py-10">
