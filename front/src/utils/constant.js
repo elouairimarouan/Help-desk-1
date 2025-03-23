@@ -1,0 +1,1 @@
+export const TICKET_PER_PAGE = 6

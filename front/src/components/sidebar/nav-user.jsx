@@ -42,7 +42,7 @@ export function NavUser() {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate("/")
+    navigate("/login")
   }
 
   return (
@@ -60,10 +60,9 @@ export function NavUser() {
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user?.first_name+" "+user?.last_name}</span>
-                {
-                  user?.role == 1  ?<span className="bg-yellow-500 red-500 text-white px-2 py-[2px] rounded-2xl">Admine</span> 
-                  :<span className="bg-sky-500 text-white px-2 py-[2px] rounded-2xl ">Reguler</span>}
+                <span className="truncate text-xs">{user.email}</span>
               </div>
+              
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>

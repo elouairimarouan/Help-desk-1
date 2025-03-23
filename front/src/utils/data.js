@@ -75,6 +75,13 @@ export const staticTickets = [
     {id : 2, name : 'service2'},
     {id : 3, name : 'service3'},
   ]
+  export const status = [
+    {value : "en_attent", name : 'En attent'},
+    {value : "en_cours", name : 'En cours'},
+    {value : "resolu", name : 'Resolu'},
+    {value : "annuler", name : 'Annuler'},
+   
+  ]
 export const users = [
   {
     "first_name": "John",

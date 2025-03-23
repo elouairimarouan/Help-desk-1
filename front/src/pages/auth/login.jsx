@@ -20,7 +20,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("admin@gmail.com");
   const [password, setPassword] = useState("admin");
-  const [error, setError] = useState("");
 
   const {loginStatus, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -32,40 +31,8 @@ export default function Login() {
     e.preventDefault();
     dispatch(loginUser({email, password}));
     if (loginStatus) {
-      navigate("/new-tickets");
+      navigate("/");
     }
-
-
-    // try {
-    //   const response = await axios.post(
-    //     "https://c940-196-64-172-50.ngrok-free.app/api/login/",
-    //     { email, password }
-    //   );
-
-    //   if (response.data.access_token) {
-    //     localStorage.setItem("authToken", response.data.access_token);
-    //     localStorage.setItem("refreshToken", response.data.refresh_token);
-    //     localStorage.setItem("userRole", response.data.role); // Store the role
-
-    //     axios.defaults.headers.common[
-    //       "Authorization"
-    //     ] = `Bearer ${response.data.access_token}`;
-
-    //     // Redirect based on role
-    //     if (response.data.role === 0) {
-    //       navigate("/ticketsUser");
-    //     } else if (response.data.role === 1) {
-    //       navigate("/ticketsAdmin");
-    //     }
-    //   } else {
-    //     setError("Login successful, but no token received.");
-    //   }
-    // } catch (error) {
-    //   console.error("Login error:", error);
-    //   setError(error.response?.data?.error || "Invalid credentials.");
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   return (
@@ -79,9 +46,6 @@ export default function Login() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {error && (
-              <div className="mb-4 text-sm text-red-600">{error}</div>
-            )}
             <form onSubmit={handleLogin}>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">

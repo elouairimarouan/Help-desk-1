@@ -67,7 +67,7 @@ export function AjouterTicket({ fetchTickets }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-fit">
+        <Button variant="outline" className="w-full">
           ➕ Ajouter un Ticket
         </Button>
       </DialogTrigger>

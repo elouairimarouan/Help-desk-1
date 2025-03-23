@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { CheckCircle, Hourglass, XCircle, Info, Delete, Trash, PenIcon, FilePen, Timer, ClockFading } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -66,6 +67,21 @@ export function ViewTicket({ ticket }) {
         return "bg-gray-500 text-white"; // Gris par défaut
     }
   };
+  const getStatusIcon = (status) => {
+    switch (status) {
+        case "annuler":
+            return <XCircle size={20}/>;
+      case "en_cours":
+       return <ClockFading size={20}/>;
+      case "resolu":
+        return <CheckCircle size={20}/>;
+      case "en_attent":
+        return <Hourglass size={20}/>;
+      default:
+        return <Info size={20}/>;
+    }
+  };
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -135,8 +151,10 @@ export function ViewTicket({ ticket }) {
           {/* Status Field */}
           <div className="grid gap-2">
             <Label htmlFor="status">Statut du ticket</Label>
-            <div className={`p-2 rounded-sm ${getStatusColor(formData.status)}`}>
-              {getStatusLabel(formData.status)}
+            <div className={`p-2 flex justify-between rounded-sm ${getStatusColor(formData.status)} `}>
+
+               {getStatusLabel(ticket.status)}  {getStatusIcon(ticket.status)}
+
             </div>
           </div>
         </form>

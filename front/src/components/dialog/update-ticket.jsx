@@ -84,7 +84,7 @@ export function UpdateTicket({ ticket, fetchTickets }) {
             Remplissez les informations du ticket et cliquez sur "Mettre à jour".
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+      <  form onSubmit={handleSubmit} className="grid gap-4 py-4">
           {/* Name Field */}
           <div className="grid gap-2">
             <Label htmlFor="name">Nom du ticket</Label>
