@@ -4,14 +4,12 @@ import { useEffect, useState } from "react";
 import { CheckCircle, Circle, Edit, Loader, ShieldUser, Trash2, User, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-
-// import { users as staticUsers } from "../../utils/data";
 import { DataTable } from "./data-table/DataTable";
 import axiosInstance from "../../utils/axiosInstance";
 import moment from "moment";
-import { DeleteUser } from "../dialog/delete-user";
+import { DeleteUser } from "../dialog/user/delete-user";
 import ChangeAccountStatus from "../change-account-status";
-import UpdateUser from "../dialog/update-user";
+import UpdateUser from "../dialog/user/update-user";
 import { users } from "../../utils/data";
 
 export default function UserList() {
@@ -36,8 +34,8 @@ export default function UserList() {
   useEffect(() => {
     fetchUsers();
   }, []);
-  const handleDelete = (email) => {
-    setData((prevData) => prevData.filter((user) => user.email !== email));
+  const handleDelete = (id) => {
+    setData((prevData) => prevData.filter((user) => user.id !== id));
     toast.success("Parent deleted successfully.");
   };
   const handleStatusChange = (userId) => {
@@ -52,6 +50,10 @@ export default function UserList() {
       prevData.map((user) => (user.id === userId ? updatedUser : user))
     );
   };
+  const handleAddUser = (newUser) => {
+    setData((prevData) => [...prevData, newUser]);
+  };
+  
   
   
   
@@ -61,7 +63,7 @@ export default function UserList() {
       header: "Profile",
       cell: ({ row }) => (
         <img
-          src={row.original.profile_image}
+          src={row.original?.profile_image}
           alt="Profile"
           className="w-10 h-10 rounded-full"
         />
@@ -83,16 +85,16 @@ export default function UserList() {
       accessorKey: "last_login",
       header: "Last Login",
       cell: ({ row }) =>
-        row.original.last_login
-          ? moment(row.original.last_login).format("D MMM YYYY")
+        row.original?.last_login
+          ? moment(row.original?.last_login).format("D MMM YYYY")
           : "Never",
     },
     {
       accessorKey: "date_joined",
       header: "Joined",
       cell: ({ row }) =>
-        row.original.date_joined
-          ? moment(row.original.date_joined).format("D MMM YYYY")
+        row.original?.date_joined
+          ? moment(row.original?.date_joined).format("D MMM YYYY")
           : "Unknown",
     },
     {
@@ -100,15 +102,15 @@ export default function UserList() {
       header: "Active",
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
-          {row.original.is_active ? (
+          {row.original?.is_active ? (
             <CheckCircle className="text-green-500" size={18} />
           ) : (
             <XCircle className="text-red-500" size={18} />
           )}
           <ChangeAccountStatus
-            id={row.original.id}
-            isActive={row.original.is_active}
-            onStatusChange={handleStatusChange} // Pass the function
+            id={row.original?.id}
+            isActive={row.original?.is_active}
+            onStatusChange={handleStatusChange} 
           />
         </div>
       ),
@@ -124,7 +126,6 @@ export default function UserList() {
       cell: ({ row }) => {
         return (
           <div className="flex gap-x-2">
-            {/* Edit Button */}
            <UpdateUser onUserUpdate={handleUserUpdate}  user={row.original}/>
             <DeleteUser fetchUsers={fetchUsers} user={row.original}/>
           </div>
@@ -140,7 +141,7 @@ export default function UserList() {
           <Loader className="animate-spin w-8 h-8 text-gray-500" />
         </div>
       ) : (
-        <DataTable columns={columns} data={data} />
+        <DataTable addedUser={handleAddUser} columns={columns} data={data} />
       )}
     </>
   );

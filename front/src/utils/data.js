@@ -82,6 +82,11 @@ export const staticTickets = [
     {value : "annuler", name : 'Annuler'},
    
   ]
+  export const profiles = [
+    { name: "Admin" },
+    { name: "User" },
+  ];
+  
 export const users = [
   {
     "first_name": "John",

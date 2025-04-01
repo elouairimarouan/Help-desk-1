@@ -4,7 +4,6 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   Sparkles,
   User2Icon,
@@ -31,10 +30,11 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/api/auth-api";
+import { Notifications } from "../dialog/profile/notifications";
 
-export function NavUser() {
+export function NavUser({}) {
    const {user } = useSelector((state) => state.auth);
   const { isMobile } = useSidebar()
   const dispatch = useDispatch();
@@ -88,13 +88,14 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 < User2Icon/>
-                Profile
+                <Link to="/profile">
+                  Profile
+                </Link>
               </DropdownMenuItem>
              
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
+              {/* <DropdownMenuItem>
+                  <Notifications/>
+              </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>

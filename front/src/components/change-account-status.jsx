@@ -10,7 +10,7 @@ function ChangeAccountStatus({ id, isActive, onStatusChange }) {
       try {
         await axiosInstance.patch(`/change-account-status/${id}/`);
         toast.success("Account status has been changed successfully.");
-        onStatusChange(id); // Notify parent to update state
+        onStatusChange(id);
       } catch (error) {
         console.error("Error changing status:", error);
         toast.error(error.response?.data?.message || "Failed to change status.");

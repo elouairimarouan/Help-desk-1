@@ -11,22 +11,22 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Trash } from "lucide-react";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../../utils/axiosInstance";
 
-export function DeleteTicket({ ticket, fetchTickets }) {
+export function DeleteUser({ user, fetchUsers }) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.delete(`/delete-ticket/${ticket.id}/`);
-      toast.success("Ticket delted successfully!");
-      fetchTickets();
+      await axiosInstance.delete(`/delete-user/${user.id}/`);
+      toast.success("User delted successfully!");
+      fetchUsers();
       setOpen(false);
     } catch (error) {
-      console.error("Erreur lors de la mise à jour du ticket:", error);
-      toast.error("Failed to update ticket. Please try again.");
+      console.error("Erreur lors de la mise à jour du users:", error);
+      toast.error("Failed to delete user. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -42,9 +42,9 @@ export function DeleteTicket({ ticket, fetchTickets }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Supprimer le ticket ID: {ticket.id} ?</DialogTitle>
+          <DialogTitle>Supprimer user ID: {user.id} ?</DialogTitle>
           <DialogDescription>
-            Êtes-vous sûr de vouloir supprimer ce ticket ? Cette action est irréversible.
+            Êtes-vous sûr de vouloir supprimer ce user ? Cette action est irréversible.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

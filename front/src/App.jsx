@@ -32,7 +32,7 @@ function App() {
       <Route path="/my-tickets" element={user?.role == 0 ? <MyTickets />  : <Navigate to='/login' />} />
       <Route path="/users" element={user?.role == 1 ? <Users /> : <Navigate to='/login' />}/>
       <Route path="*" element={<NotFound/>} />
-      <Route path="/profile" element={<Profile/>} />
+      <Route path="/profile" element={user ? <Profile/> : <Navigate to='/login' /> } />
     </Routes>
     </BrowserRouter>
     </ThemeProvider>

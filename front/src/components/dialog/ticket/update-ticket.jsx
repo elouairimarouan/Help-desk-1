@@ -23,8 +23,8 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label"; // Import Label
 import { Textarea } from "@/components/ui/textarea";
-import axiosInstance from "../../utils/axiosInstance";
-import { services } from "../../utils/data";
+import axiosInstance from "../../../utils/axiosInstance";
+import { services } from "../../../utils/data";
 import { FilePen, Loader2 } from "lucide-react";
 import { useSelector } from "react-redux";
 
@@ -39,7 +39,6 @@ export function UpdateTicket({ ticket, fetchTickets }) {
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  // Update formData when the ticket prop changes
   useEffect(() => {
     setFormData({
       name: ticket.name || "",
@@ -85,7 +84,6 @@ export function UpdateTicket({ ticket, fetchTickets }) {
           </DialogDescription>
         </DialogHeader>
       <  form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          {/* Name Field */}
           <div className="grid gap-2">
             <Label htmlFor="name">Nom du ticket</Label>
             <Input
@@ -97,8 +95,6 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               required
             />
           </div>
-
-          {/* Service Field */}
           <div className="grid gap-2">
             <Label htmlFor="service">Service</Label>
             <Select
@@ -120,8 +116,6 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               </SelectContent>
             </Select>
           </div>
-
-          {/* Description Field */}
           <div className="grid gap-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
@@ -133,8 +127,6 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               required
             />
           </div>
-
-          {/* Status Field */}
           <div className="grid gap-2">
             <Label htmlFor="status">Update Statut</Label>
             <RadioGroup
@@ -160,7 +152,7 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               {ticket.status === "en_attent" && (
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="annuler" id="r4" />
-                  <Label htmlFor="r4">Annuler</Label>
+                  <Label htmlFor="r4">Fermi</Label>
                 </div>
               )}
             </RadioGroup>
@@ -171,7 +163,6 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               {loading ? (
                 <>
                   <Loader2 className="animate-spin mr-2" />
-                  {/* Update en cours... */}
                 </>
               ) : (
                 "Confirm"

@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/api/auth-api";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/api/auth-api";
 import { Loader2 } from "lucide-react";
 
 export default function Login() {
@@ -21,15 +14,13 @@ export default function Login() {
   const [email, setEmail] = useState("admin@gmail.com");
   const [password, setPassword] = useState("admin");
 
-  const {loginStatus, isLoading } = useSelector((state) => state.auth);
+  const { loginStatus, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({email, password}));
+    dispatch(loginUser({ email, password }));
     if (loginStatus) {
       navigate("/");
     }
@@ -62,10 +53,7 @@ export default function Login() {
                 <div className="grid gap-2">
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
-                    <Link
-                      to="/forgot-password"
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                    >
+                    <Link to="/forgot-password" className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
                       Forgot your password?
                     </Link>
                   </div>
@@ -81,24 +69,17 @@ export default function Login() {
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? (
-                        <FaEyeSlash size={20} />
-                      ) : (
-                        <FaEye size={20} />
-                      )}
+                      {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                     </span>
                   </div>
                 </div>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? <Loader2 className="animate-spin"/> : "Login"}
+                  {isLoading ? <Loader2 className="animate-spin" /> : "Login"}
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link
-                  to="/signup"
-                  className="underline underline-offset-4"
-                >
+                Don&apos;t have an account? {" "}
+                <Link to="/signup" className="underline underline-offset-4">
                   Sign up
                 </Link>
               </div>

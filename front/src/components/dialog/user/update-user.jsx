@@ -13,7 +13,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Edit, Loader2 } from "lucide-react";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../../utils/axiosInstance";
 
 function UpdateUser({ user, onUserUpdate }) {
   const [formData, setFormData] = useState({
@@ -21,6 +21,7 @@ function UpdateUser({ user, onUserUpdate }) {
     last_name: user.last_name,
     email: user.email,
     role: user.role, 
+    password: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -36,11 +37,23 @@ function UpdateUser({ user, onUserUpdate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
+    // Prepare updated data
+    const updatedData = { 
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      email: formData.email,
+      role: formData.role
+    };
+  
+    if (formData.password.trim() !== "") {
+      updatedData.password = formData.password;
+    }
+  
     try {
-      const response = await axiosInstance.put(`/update-user/${user.id}/`, formData);
+      const response = await axiosInstance.put(`/update-user/${user.id}/`, updatedData);
       toast.success("User updated successfully.");
-      onUserUpdate(user.id, response.data.user); // Update user in parent component
+      onUserUpdate(user.id, response.data.user); 
     } catch (error) {
       console.error("Error updating user:", error);
       toast.error(error.response?.data?.message || "Failed to update user.");
@@ -48,7 +61,7 @@ function UpdateUser({ user, onUserUpdate }) {
       setLoading(false);
     }
   };
-
+  
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -63,7 +76,6 @@ function UpdateUser({ user, onUserUpdate }) {
         </SheetHeader>
         
         <form onSubmit={handleSubmit} className="flex flex-col px-4 gap-4 mt-4">
-          {/* First Name */}
           <div>
             <Label className='mb-3' htmlFor="first_name">First Name</Label>
             <Input
@@ -74,8 +86,6 @@ function UpdateUser({ user, onUserUpdate }) {
               required
             />
           </div>
-
-          {/* Last Name */}
           <div>
             <Label className='mb-3' htmlFor="last_name">Last Name</Label>
             <Input
@@ -86,8 +96,6 @@ function UpdateUser({ user, onUserUpdate }) {
               required
             />
           </div>
-
-          {/* Email */}
           <div>
             <Label className='mb-3' htmlFor="email">Email</Label>
             <Input
@@ -100,15 +108,16 @@ function UpdateUser({ user, onUserUpdate }) {
             />
           </div>
           <div>
-            <Label className='mb-3' htmlFor="passowrd">Passowrd</Label>
+            <Label className='mb-3' htmlFor="password">New Password (Optional)</Label>
             <Input
-              id="passowrd"
-              name="passowrd"
-              type="passowrd"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              type="password"
+              placeholder="Leave empty to keep current password"
             />
           </div>
-
-          {/* Role Selection (Admin/User) */}
           <div>
             <Label className='mb-3'>Role</Label>
             <RadioGroup value={String(formData.role)} onValueChange={handleRoleChange} className="flex gap-4">
@@ -120,8 +129,6 @@ function UpdateUser({ user, onUserUpdate }) {
               </Label>
             </RadioGroup>
           </div>
-
-          {/* Submit Button */}
           <Button type="submit" disabled={loading}>
             {loading ? <Loader2 className="animate-spin w-5 h-5" /> : "Update User"}
           </Button>

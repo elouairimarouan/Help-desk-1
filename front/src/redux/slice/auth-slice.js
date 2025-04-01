@@ -24,10 +24,16 @@ const authSlice = createSlice({
       state.loginStatus = action.payload;
     },
     setUserPhoto(state, action) {
-      state.user.profilePhoto = action.payload;
+      state.user.profile_image = action.payload;
     },
-    setName(state, action) {
-      state.user.name = action.payload;
+    setFirstName(state, action) {
+      state.user.first_name = action.payload;
+    },
+    setLastName(state, action) {
+      state.user.last_name = action.payload;
+    },
+    setEmail(state, action) {
+      state.user.email = action.payload;
     },
     setAccessToken(state, action) {
       state.user.access_token = action.payload;

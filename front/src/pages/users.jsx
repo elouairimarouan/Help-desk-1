@@ -5,6 +5,7 @@ import Path from "../components/sidebar/path";
 import UserList from "../components/tables/user-list";
 function Users() {
   return (
+    <>
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
@@ -14,6 +15,7 @@ function Users() {
         </div>
       </SidebarInset>
     </SidebarProvider>
+    </>
   );
 }
 

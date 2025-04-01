@@ -23,8 +23,8 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import axiosInstance from "../../utils/axiosInstance";
-import { services } from "../../utils/data";
+import axiosInstance from "../../../utils/axiosInstance";
+import { services } from "../../../utils/data";
 import { Eye } from "lucide-react";
 
 export function ViewTicket({ ticket }) {
@@ -36,7 +36,6 @@ export function ViewTicket({ ticket }) {
   });
   const [open, setOpen] = useState(false);
 
-  // Fonction pour mapper les statuts à des libellés en français
   const getStatusLabel = (status) => {
     switch (status) {
       case "en_attent":
@@ -52,19 +51,18 @@ export function ViewTicket({ ticket }) {
     }
   };
 
-  // Fonction pour obtenir la couleur en fonction du statut
   const getStatusColor = (status) => {
     switch (status) {
       case "en_attent":
-        return "bg-yellow-500 text-white"; // Jaune pour "En attente"
+        return "bg-yellow-500 text-white"; 
       case "resolu":
-        return "bg-green-500 text-white"; // Vert pour "Résolu"
+        return "bg-green-500 text-white"; 
       case "en_cours":
-        return "bg-blue-500 text-white"; // Bleu pour "En cours"
+        return "bg-blue-500 text-white"; 
       case "annuler":
-        return "bg-red-600 text-white"; // Rouge pour "Annulé"
+        return "bg-red-600 text-white"; 
       default:
-        return "bg-gray-500 text-white"; // Gris par défaut
+        return "bg-gray-500 text-white"; 
     }
   };
   const getStatusIcon = (status) => {
@@ -98,7 +96,6 @@ export function ViewTicket({ ticket }) {
           </DialogDescription>
         </DialogHeader>
         <form className="grid gap-4 py-4">
-          {/* Name Field */}
           <div className="grid gap-2">
             <Label htmlFor="name">Nom du ticket</Label>
             <Input
@@ -110,8 +107,6 @@ export function ViewTicket({ ticket }) {
               required
             />
           </div>
-
-          {/* Service Field */}
           <div className="grid gap-2">
             <Label htmlFor="service">Service</Label>
             <Select
@@ -134,8 +129,6 @@ export function ViewTicket({ ticket }) {
               </SelectContent>
             </Select>
           </div>
-
-          {/* Description Field */}
           <div className="grid gap-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
@@ -147,8 +140,6 @@ export function ViewTicket({ ticket }) {
               required
             />
           </div>
-
-          {/* Status Field */}
           <div className="grid gap-2">
             <Label htmlFor="status">Statut du ticket</Label>
             <div className={`p-2 flex justify-between rounded-sm ${getStatusColor(formData.status)} `}>

@@ -26,8 +26,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DataTablePagination } from "./DataTablePagination";
 import { List } from "lucide-react";
+import { AjouterUser } from "../../dialog/user/ajouter-user";
 
-export function DataTable({ columns, data, page }) {
+export function DataTable({addedUser, columns, data, page }) {
     const [sorting, setSorting] = useState([]);
     const [columnFilters, setColumnFilters] = useState([]);
     const [columnVisibility, setColumnVisibility] = useState({});
@@ -53,7 +54,7 @@ export function DataTable({ columns, data, page }) {
 
     return (
         <div className="flex flex-col gap-3">
-            <div className="flex items-center  gap-3">
+            <div className="flex items-center gap-3">
                 <Input
                     placeholder="Filter emails..."
                     value={table.getColumn("email")?.getFilterValue() ?? ""}
@@ -62,9 +63,9 @@ export function DataTable({ columns, data, page }) {
                             .getColumn("email")
                             ?.setFilterValue(event.target.value)
                     }
-                    className="w-full sm:max-w-sm"
+                    className=""
                 />
-
+   <AjouterUser addedUser={addedUser} />
                 {page === "student" && <StatusFilter table={table} />}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

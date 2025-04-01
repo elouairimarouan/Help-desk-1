@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import Path from "../components/sidebar/path";
-import { Loader, RotateCcw, Search } from "lucide-react";
-import { AjouterTicket } from "../components/dialog/ajouter-ticket";
+import { CircleAlert, Loader, RotateCcw, Search } from "lucide-react";
+import { AjouterTicket } from "../components/dialog/ticket/ajouter-ticket";
 import TicketItem from "../components/ticket-item";
 import axiosInstance from "../utils/axiosInstance";
 import { toast } from "sonner";
@@ -31,10 +31,10 @@ function MyTickets() {
     service: "",
     status: "",
   });
-  const [currentPage, setCurrentPage] = useState(1)
-  const pages = Math.ceil(count / TICKET_PER_PAGE)
+  const [currentPage, setCurrentPage] = useState(1);
+  const pages = Math.ceil(count / TICKET_PER_PAGE);
+  
   const fetchTickets = async () => {
-    
     setLoading(true);
     try {
       const response = await axiosInstance.get(
@@ -52,7 +52,7 @@ function MyTickets() {
 
   useEffect(() => {
     fetchTickets();
-  }, [formData, currentPage]); // Corrected dependency
+  }, [formData, currentPage]);
   const resetFilters = () => {
     setFormData({
       search: "",
@@ -80,8 +80,6 @@ function MyTickets() {
                   className="pl-10"
                 />
               </div>
-
-              {/* Service Select */}
               <Select
                 value={formData.service}
                 onValueChange={(value) =>
@@ -102,8 +100,6 @@ function MyTickets() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-
-              {/* Status Select */}
               <Select
                 value={formData.status}
                 onValueChange={(value) =>
@@ -126,37 +122,31 @@ function MyTickets() {
               </Select>
               <Button  onClick={resetFilters} variant="outline" className="w-full">
                 <RotateCcw />
-          Reset
-        </Button>
+                Reset
+              </Button>
           </div>
-
-        {/* Ticket List */}
-{loading ? (
-  <div className="flex justify-center items-center py-10">
-    <Loader className="animate-spin w-8 h-8 text-gray-500" />
-  </div>
-) : (
-  <>
-    <div className="mt-5 grid md:grid-cols-3 gap-5">
-      {count > 0 ? (
-        tickets.map((ticket, index) => (
-          <TicketItem fetchTickets={fetchTickets} key={index} ticket={ticket} />
-        ))
-      ) : (
-        <p className="text-center text-gray-500 col-span-full">Aucun ticket disponible.</p>
-      )}
-    </div>
-
-    {/* Pagination outside of grid */}
-    {count > 0 && (
-      <div className="mt-6 flex justify-center">
-        <Pagination pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      </div>
-    )}
-  </>
-)}
-
-
+        {loading ? (
+          <div className="flex justify-center items-center py-10">
+            <Loader className="animate-spin w-8 h-8 text-gray-500" />
+          </div>
+        ) : (
+          <>
+            <div className="mt-5 grid md:grid-cols-3 gap-5">
+              {count > 0 ? (
+                tickets.map((ticket, index) => (
+                  <TicketItem fetchTickets={fetchTickets} key={index} ticket={ticket} />
+                ))
+              ) : (
+                <p className="text-center text-gray-500 col-span-3 flex flex-col justify-center items-center  gap-2">No ticket yet. <CircleAlert className="animate-bounce text-red-600" size={18} /></p>
+              )}
+            </div>
+            {count > 0 && (
+              <div className="mt-6 flex justify-center">
+                <Pagination pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+              </div>
+            )}
+          </>
+        )}
         </div>
       </SidebarInset>
     </SidebarProvider>

@@ -16,6 +16,7 @@ import { ModeToggle } from "../dark-mode/mode-toggle";
 import logo from "../../assets/royaume.png";
 import { SidebarFooter } from "../ui/sidebar";
 import { useSelector } from "react-redux";
+import { Notifications } from "../dialog/profile/notifications";
 
 
 export function AppSidebar() {
@@ -29,7 +30,6 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu className="gap-2">
-            {/* Home */}
             <SidebarMenuItem>
               <SidebarMenuSubButton asChild className="flex items-center gap-2">
                 <Link to="/">
@@ -48,8 +48,6 @@ export function AppSidebar() {
            </Link>
          </SidebarMenuSubButton>
        </SidebarMenuItem>
-
-       {/* Tickets */}
        <SidebarMenuItem>
          <SidebarMenuSubButton asChild className="flex items-center gap-2">
            <Link to="/tickets">
@@ -77,19 +75,26 @@ export function AppSidebar() {
  </SidebarMenuSubButton>
 </SidebarMenuItem> 
 }
-            {/* Settings */}
-            <SidebarMenuItem>
+            {/* <SidebarMenuItem>
               <SidebarMenuSubButton asChild className="flex items-center gap-2">
                 <Link to="/setting">
                   <Settings className="size-4" />
                   Settings
                 </Link>
               </SidebarMenuSubButton>
+            </SidebarMenuItem> */}
+                        <SidebarMenuItem>
+              <SidebarMenuSubButton asChild className="flex items-center gap-2">
+              <Notifications/>
+
+              </SidebarMenuSubButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+      <SidebarMenuSubButton asChild className="flex items-center gap-2">
+ </SidebarMenuSubButton>
         <ModeToggle />
       </SidebarFooter>
     </Sidebar>

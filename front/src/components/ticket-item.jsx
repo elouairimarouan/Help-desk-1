@@ -4,11 +4,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle, Hourglass, XCircle, Info, Delete, Trash, PenIcon, FilePen, Timer, ClockFading } from "lucide-react";
-import { UpdateTicket } from './dialog/update-ticket';
-import { DeleteTicket } from './dialog/delete-ticket';
+import { UpdateTicket } from './dialog/ticket/update-ticket';
+import { DeleteTicket } from './dialog/ticket/delete-ticket';
 import moment from 'moment/moment';
 import "moment/locale/fr";
-import { ViewTicket } from './dialog/view-ticket';
+import { ViewTicket } from './dialog/ticket/view-ticket';
 import { useSelector } from 'react-redux';
 import {
   DropdownMenuSeparator
@@ -105,7 +105,7 @@ function TicketItem({ ticket, fetchTickets }) {
      </div>
       <CardFooter className="flex justify-center gap-2">
       <ViewTicket  ticket={ticket} />
-      <DeleteTicket  fetchTickets={fetchTickets}  ticket={ticket} />
+      {/* <DeleteTicket  fetchTickets={fetchTickets}  ticket={ticket} /> */}
        <UpdateTicket fetchTickets={fetchTickets} ticket={ticket}/>
       </CardFooter>
     </Card>

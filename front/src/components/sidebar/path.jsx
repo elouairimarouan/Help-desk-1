@@ -11,8 +11,9 @@ import {
 } from "../ui/breadcrumb";
 import { ModeToggle } from "../dark-mode/mode-toggle";
 import { NavUser } from "./nav-user";
+import { Link } from "react-router-dom";
 
-function Path({ path1, path2, path3 }) {
+function Path({ path1, path2 }) {
   return (
     <header className="flex px-4 h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
       <div className="flex items-center gap-2">
@@ -21,16 +22,22 @@ function Path({ path1, path2, path3 }) {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#">{path1}</BreadcrumbLink>
+            <Link to="/">
+              <BreadcrumbLink>
+              
+              {path1}
+              </BreadcrumbLink>
+              </Link>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
+            {
+
+path2 && <> <BreadcrumbSeparator className="hidden md:block" />
             <BreadcrumbItem>
               <BreadcrumbPage>{path2}</BreadcrumbPage>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{path3}</BreadcrumbPage>
-            </BreadcrumbItem>
+            </BreadcrumbItem></>          }
+           
+
+
           </BreadcrumbList>
         </Breadcrumb>
       </div>

@@ -3,7 +3,7 @@ import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import Path from "../components/sidebar/path";
 import { Loader, RotateCcw, Search } from "lucide-react";
-import { AjouterTicket } from "../components/dialog/ajouter-ticket";
+import { AjouterTicket } from "../components/dialog/ticket/ajouter-ticket";
 import TicketItem from "../components/ticket-item";
 import axiosInstance from "../utils/axiosInstance";
 import { toast } from "sonner";
@@ -52,7 +52,7 @@ function Tickets() {
 
   useEffect(() => {
     fetchTickets();
-  }, [formData,currentPage]); // Corrected dependency
+  }, [formData,currentPage]);
   const resetFilters = () => {
     setFormData({
       search: "",
@@ -65,7 +65,7 @@ function Tickets() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <Path path1="Home" path2="NewTickets" path3="Tickets"/>
+        <Path path1="Home"  path2="Tickets"/>
         <div className="p-4 pt-0 w-full">
           <div className="grid md:grid-cols-5 gap-4">
             <AjouterTicket fetchTickets={fetchTickets} />
@@ -76,21 +76,19 @@ function Tickets() {
                   value={formData.search}
                   onChange={(e) => {
                     setFormData((prev) => ({ ...prev, search: e.target.value }));
-                    setCurrentPage(1); // Reset to page 1
+                    setCurrentPage(1); 
                   }}
                 
                   className="pl-10"
                 />
               </div>
-
-              {/* Service Select */}
               <Select
-  value={formData.service}
-  onValueChange={(value) => {
-    setFormData((prev) => ({ ...prev, service: value }));
-    setCurrentPage(1); // Reset to page 1
-  }}
->
+                value={formData.service}
+                onValueChange={(value) => {
+                  setFormData((prev) => ({ ...prev, service: value }));
+                  setCurrentPage(1); 
+               }}
+              >
 
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Sélectionner un service" />
@@ -109,12 +107,12 @@ function Tickets() {
 
               {/* Status Select */}
               <Select
-  value={formData.status}
-  onValueChange={(value) => {
-    setFormData((prev) => ({ ...prev, status: value }));
-    setCurrentPage(1); // Reset to page 1
-  }}
->
+                 value={formData.status}
+                 onValueChange={(value) => {
+                   setFormData((prev) => ({ ...prev, status: value }));
+                   setCurrentPage(1);
+                  }}
+                    >
 
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Sélectionner un status" />
@@ -132,35 +130,31 @@ function Tickets() {
               </Select>
               <Button  onClick={resetFilters} variant="outline" className="w-full">
                 <RotateCcw />
-          Reset
-        </Button>
+                  Reset
+              </Button>
           </div>
-
-   {/* Ticket List */}
-{loading ? (
-  <div className="flex justify-center items-center py-10">
-    <Loader className="animate-spin w-8 h-8 text-gray-500" />
-  </div>
-) : (
-  <>
-    <div className="mt-5 grid md:grid-cols-3 gap-5">
-      {count > 0 ? (
-        tickets.map((ticket, index) => (
-          <TicketItem fetchTickets={fetchTickets} key={index} ticket={ticket} />
-        ))
-      ) : (
-        <p className="text-center text-gray-500 col-span-full">Aucun ticket disponible.</p>
-      )}
-    </div>
-
-    {/* Pagination outside of grid */}
+                {loading ? (
+                  <div className="flex justify-center items-center py-10">
+                      <Loader className="animate-spin w-8 h-8 text-gray-500" />
+                  </div>
+                ) : (
+                  <>
+                    <div className="mt-5 grid md:grid-cols-3 gap-5">
+                      {count > 0 ? (
+                        tickets.map((ticket, index) => (
+                            <TicketItem fetchTickets={fetchTickets} key={index} ticket={ticket} />
+                        ))
+                        ) : (
+                       <p className="text-center text-gray-500 col-span-full">Aucun ticket disponible.</p>
+                      )}
+                    </div>
     {count > 0 && (
       <div className="mt-6 flex justify-center">
         <Pagination pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
     )}
-  </>
-)}
+                 </>
+                )}
 
 
           
