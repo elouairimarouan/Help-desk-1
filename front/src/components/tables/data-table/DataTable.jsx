@@ -28,7 +28,7 @@ import { DataTablePagination } from "./DataTablePagination";
 import { List } from "lucide-react";
 import { AjouterUser } from "../../dialog/user/ajouter-user";
 
-export function DataTable({addedUser, columns, data, page }) {
+export function DataTable({addedUser, columns, data, page, fetchUsers }) {
     const [sorting, setSorting] = useState([]);
     const [columnFilters, setColumnFilters] = useState([]);
     const [columnVisibility, setColumnVisibility] = useState({});
@@ -65,7 +65,7 @@ export function DataTable({addedUser, columns, data, page }) {
                     }
                     className=""
                 />
-   <AjouterUser addedUser={addedUser} />
+   <AjouterUser fetchUsers={fetchUsers} addedUser={addedUser} />
                 {page === "student" && <StatusFilter table={table} />}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

@@ -4,17 +4,20 @@ import { Bell, BellDot, CheckCheck, MessageSquare } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import axiosInstance from "../../../utils/axiosInstance";
 import moment from "moment";
-import { Button } from "@/components/ui/button";
 export function Notifications() {
   const [notifications, setNotifications] = useState([]); // Initialize as an empty array
   const [loading, setLoading] = useState(false); // Loading state
-  const [unreadCount, setUnreadCount] = useState(0); // State for unread notifications count
 
   useEffect(() => {
     fetchNotifications();
-    // fetchUnreadCount();
+  
+    // const interval = setInterval(() => {
+    //   fetchNotifications();
+    // }, 10000); // every 10 seconds
+  
+    // return () => clearInterval(interval); // cleanup
   }, []);
-
+  
   // Fetch notifications
   const fetchNotifications = async () => {
     setLoading(true); // Set loading state to true while fetching
@@ -32,20 +35,6 @@ export function Notifications() {
       setLoading(false); // Set loading state to false after the fetch completes
     }
   };
-
-  // Fetch unread notifications count
-  // const fetchUnreadCount = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     const response = await axiosInstance.get("/notifications/unread-count/", {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     setUnreadCount(response.data.count || 0);
-  //   } catch (error) {
-  //     console.error("Error fetching unread count:", error);
-  //   }
-  // };
-
   // Mark a notification as read
   const markAsRead = async (id) => {
     try {
@@ -55,9 +44,8 @@ export function Notifications() {
       });
 
       // Update UI after marking as read
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
-      );
+      setNotifications((prev) => prev.filter((n) => n.id !== id));
+
     } catch (error) {
       console.error("Error marking notification as read:", error);
     }
@@ -90,9 +78,9 @@ export function Notifications() {
              
             >
               <span>{notification.message}.</span>
-              <div className="flex text-[12px] justify-between w-full"  onClick={() => markAsRead(notification.id)}>
+              <div className="flex text-[12px] justify-between w-full"  >
                 {moment(notification.created_at).format("D MMM YYYY")}
-             <button className="cursor-pointer group ">   <CheckCheck className="group-hover:text-green-500 transition-all duration-150" /></button>
+             <button onClick={() => markAsRead(notification.id)} className="cursor-pointer group ">   <CheckCheck className="group-hover:text-green-500 transition-all duration-150" /></button>
     </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />

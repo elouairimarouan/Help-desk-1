@@ -118,7 +118,7 @@ export default function UserList() {
     {
       accessorKey: "role",
       header: "Role",
-      cell: ({ row }) => (row.original.role === 1 ? <span className="flex items-center gap-1"> <ShieldUser className="text-green-500 " size={18} />Admine</span> : <span className="flex items-center  gap-1"> <User className="text-blue-500" size={18} />User</span>),
+      cell: ({ row }) => (row.original?.role === 1 ? <span className="flex items-center gap-1"> <ShieldUser className="text-green-500 " size={18} />Admine</span> : <span className="flex items-center  gap-1"> <User className="text-blue-500" size={18} />User</span>),
     },
     {
       header: "Actions",
@@ -141,7 +141,7 @@ export default function UserList() {
           <Loader className="animate-spin w-8 h-8 text-gray-500" />
         </div>
       ) : (
-        <DataTable addedUser={handleAddUser} columns={columns} data={data} />
+        <DataTable addedUser={handleAddUser} fetchUsers={fetchUsers} columns={columns} data={data} />
       )}
     </>
   );

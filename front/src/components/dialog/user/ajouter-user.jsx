@@ -14,7 +14,7 @@ import {
 import axiosInstance from "../../../utils/axiosInstance";
 import { Loader2 } from "lucide-react";
 
-export function AjouterUser({ addedUser }) {
+export function AjouterUser({ addedUser , fetchUsers}) {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -59,7 +59,8 @@ export function AjouterUser({ addedUser }) {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("Utilisateur ajouté avec succès.");
-      addedUser();
+      // addedUser(userData);
+      fetchUsers()
       setOpen(false);
       setFormData({
         first_name: "",

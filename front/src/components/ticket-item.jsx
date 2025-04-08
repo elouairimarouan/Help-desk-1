@@ -95,7 +95,7 @@ function TicketItem({ ticket, fetchTickets }) {
           </div>
         <div className="flex flex-col space-y-1.5">
             <Label>Description</Label>
-            <p className="text-gray-600 line-clamp-1">lore{ticket.description}</p>
+            <p className="text-gray-600 line-clamp-1">{ticket.description}</p>
           </div>
           <div className="flex flex-col space-y-1.5">
             <Label>Service</Label>
@@ -105,7 +105,7 @@ function TicketItem({ ticket, fetchTickets }) {
      </div>
       <CardFooter className="flex justify-center gap-2">
       <ViewTicket  ticket={ticket} />
-      {/* <DeleteTicket  fetchTickets={fetchTickets}  ticket={ticket} /> */}
+      <DeleteTicket  fetchTickets={fetchTickets}  ticket={ticket} />
        <UpdateTicket fetchTickets={fetchTickets} ticket={ticket}/>
       </CardFooter>
     </Card>

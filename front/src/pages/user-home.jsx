@@ -68,11 +68,6 @@ export default function UserHome() {
               </CardContent>
             </Card>
 
-            <Card className="h-full p-6 shadow-lg border border-gray-200 rounded-lg">
-              <CardContent className="flex flex-col items-center">
-                <div className="aspect-video w-full rounded-xl bg-muted/50" />
-              </CardContent>
-            </Card>
           </div>
         </div>
       </SidebarInset>

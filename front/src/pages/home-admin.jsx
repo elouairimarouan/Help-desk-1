@@ -13,6 +13,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom"; 
+import Charts from "../components/charts";
 
 export default function HomeAdmin() {
   const { user } = useSelector((state) => state.auth);
@@ -54,16 +55,17 @@ export default function HomeAdmin() {
             </CardContent>
           </Card>
           <div className="flex flex-col gap-5 h-full">
-            <Card className="h-full">
+            {/* <Card className="h-full">
               <CardContent className="flex flex-col items-center">
                 <div className="aspect-video rounded-xl bg-muted/50" />
               </CardContent>
-            </Card>
-            <Card className="h-full">
-              <CardContent className="flex flex-col items-center">
+            </Card> */}
+            {/* <Card className="h-full"> */}
+              {/* <CardContent className="flex flex-col items-center">
                 <div className="aspect-video rounded-xl bg-muted/50" />
-              </CardContent>
-            </Card>
+              </CardContent> */}
+                              <Charts/>
+            {/* </Card> */}
           </div>
         </div>
       </SidebarInset>

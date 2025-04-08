@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function ConfirmPassword() {
   const navigate = useNavigate();
@@ -14,6 +14,12 @@ export default function ConfirmPassword() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Validate password strength
+  const isStrongPassword = (password) => {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+    return regex.test(password);
+  };
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -25,8 +31,8 @@ export default function ConfirmPassword() {
       return;
     }
 
-    if (newPassword.length < 6) {
-      setError("Le mot de passe doit contenir au moins 6 caractères.");
+    if (!isStrongPassword(newPassword)) {
+      setError("Le mot de passe doit contenir au moins 6 caractères, un chiffre, et un caractère spécial.");
       return;
     }
 
@@ -38,10 +44,10 @@ export default function ConfirmPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://c940-196-64-172-50.ngrok-free.app/api/reset-password/",
+      const response = await axiosInstance.post(
+        "/reset-password/",
         {
-          code, // On utilise le code au lieu du token
+          code, 
           new_password: newPassword,
           confirm_password: confirmPassword,
         }
@@ -49,9 +55,9 @@ export default function ConfirmPassword() {
 
       if (response.data.success) {
         setMessage("Mot de passe réinitialisé avec succès !");
-        setTimeout(() => navigate("/login"), 2000);
+        navigate("/login"); // Navigate to login page immediately after success
       } else {
-        setError("Code invalide ou erreur de réinitialisation.");
+        setError(response.data.message || "Code invalide ou erreur de réinitialisation.");
       }
     } catch (err) {
       console.error("Reset Password error:", err);

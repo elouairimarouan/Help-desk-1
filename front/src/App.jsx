@@ -24,9 +24,9 @@ function App() {
       <Route path="/" element={user ? (user?.role == 1 ?<HomeAdmin />  : <UserHome />) : <Navigate to='/login' />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={!user ? <Login /> : <Navigate to='/' />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/confirm-password" element={<ConfirmPassword />} />
-      <Route path="/confirm-password" element={<ConfirmPassword />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
+      <Route path="/confirmPassword" element={<ConfirmPassword />} />
+      {/* <Route path="/confirm-password" element={<ConfirmPassword />} /> */}
       <Route path="/new-tickets" element={user?.role == 1 ? <NewTickets />  : <Navigate to='/login' />} />
       <Route path="/tickets" element={user?.role == 1  ? <Tickets />  : <Navigate to='/login' />} />
       <Route path="/my-tickets" element={user?.role == 0 ? <MyTickets />  : <Navigate to='/login' />} />

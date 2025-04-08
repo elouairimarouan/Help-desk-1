@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const Navigate = useNavigate()
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -19,19 +20,18 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://c940-196-64-172-50.ngrok-free.app/api/forgot-password/",
-        { email }
-      );
+      const response = await axiosInstance.post("/forgot-password/", { email });
 
       if (response.data.success) {
         setMessage("Un email de réinitialisation a été envoyé.");
+        Navigate("/ConfirmPassword"); // Navigate to login page immediately after success
+
       } else {
         setError("Une erreur est survenue. Vérifiez votre email.");
       }
     } catch (err) {
       console.error("Forgot Password error:", err);
-      setError("Impossible d'envoyer la demande. Essayez encore.");
+      setError("Aucun utilisateur trouvé avec cet e-mail.");
     } finally {
       setLoading(false);
     }
