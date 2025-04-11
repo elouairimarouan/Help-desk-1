@@ -80,7 +80,6 @@ export default function ConfirmPassword() {
 
             <form onSubmit={handleResetPassword}>
               <div className="grid gap-4">
-                {/* Code de validation */}
                 <div className="grid gap-2">
                   <Label htmlFor="code">Code de validation</Label>
                   <Input
@@ -93,8 +92,6 @@ export default function ConfirmPassword() {
                     required
                   />
                 </div>
-
-                {/* Nouveau mot de passe */}
                 <div className="grid gap-2">
                   <Label htmlFor="newPassword">Nouveau mot de passe</Label>
                   <Input
@@ -105,8 +102,6 @@ export default function ConfirmPassword() {
                     required
                   />
                 </div>
-
-                {/* Confirmation du mot de passe */}
                 <div className="grid gap-2">
                   <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
                   <Input
@@ -117,8 +112,6 @@ export default function ConfirmPassword() {
                     required
                   />
                 </div>
-
-                {/* Bouton de soumission */}
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? "Réinitialisation..." : "Réinitialiser"}
                 </Button>

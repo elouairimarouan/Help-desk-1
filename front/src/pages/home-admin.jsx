@@ -14,6 +14,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom"; 
 import Charts from "../components/charts";
+import TicketStatistics from "../components/chart-status";
+// import ChartStatus from "../components/chart-status";
+// import DynamicChart from "../components/chart-status";
 
 export default function HomeAdmin() {
   const { user } = useSelector((state) => state.auth);
@@ -24,7 +27,7 @@ export default function HomeAdmin() {
       <SidebarInset>
         <Path path1="Home"/>
         <div className="min-h-[90vh] grid md:grid-cols-2 gap-4 p-4 pt-0">
-          <Card className="flex items-center justify-center">
+          {/* <Card className="flex items-center justify-center">
             <CardContent className="flex flex-col items-center">
               <Avatar className="h-50 w-50 rounded-full">
                 <AvatarImage src={user?.profile_image || "/default-avatar.png"} />
@@ -53,7 +56,8 @@ export default function HomeAdmin() {
                 </Button>
               </Link>
             </CardContent>
-          </Card>
+          </Card> */}
+          <TicketStatistics/>
           <div className="flex flex-col gap-5 h-full">
             {/* <Card className="h-full">
               <CardContent className="flex flex-col items-center">
