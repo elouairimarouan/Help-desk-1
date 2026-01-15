@@ -1,4 +1,3 @@
-// UpdateProfile.js
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,10 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../redux/api/profile-api";
 
 /**
- * Composant pour mettre à jour le profil utilisateur
- * @param {Object} props - Les props du composant
- * @param {Object} props.user - L'utilisateur courant
- * @param {Function} props.onUserUpdate - Callback après mise à jour du profil
+ * Component to update the user profile
+ * @param {Object} props - Component props
+ * @param {Object} props.user - Current user object
  */
 function UpdateProfile({ user }) {
   const dispatch = useDispatch();
@@ -29,21 +27,20 @@ function UpdateProfile({ user }) {
     last_name: user?.last_name || "",
     email: user?.email || "",
     password: "",
-  })
-  const {loading } = useSelector((state) => state.profile);
+  });
+  
+  const { loading } = useSelector((state) => state.profile);
 
   /**
-   * Gère les changements dans les champs du formulaire
-   * @param {Object} e - L'événement de changement
+   * Handles input changes
    */
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   /**
-   * Vérifie si des modifications ont été faites
-   * @returns {Boolean} True si des modifications existent
+   * Checks if any changes were made to the form
    */
   const hasChanges = () => {
     return (
@@ -55,45 +52,42 @@ function UpdateProfile({ user }) {
   };
 
   /**
-   * Valide le formulaire avant soumission
-   * @returns {Boolean} True si le formulaire est valide
+   * Validates the form fields
    */
   const validateForm = () => {
     if (!formData.first_name.trim()) {
-      toast.error("Le prénom est requis");
+      toast.error("First name is required");
       return false;
     }
     if (!formData.last_name.trim()) {
-      toast.error("Le nom est requis");
+      toast.error("Last name is required");
       return false;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      toast.error("Veuillez entrer un email valide");
+      toast.error("Please enter a valid email");
       return false;
     }
     if (formData.password && formData.password.length < 8) {
-      toast.error("Le mot de passe doit contenir au moins 8 caractères");
+      toast.error("Password must be at least 8 characters");
       return false;
     }
     return true;
   };
 
   /**
-   * Soumet le formulaire de mise à jour
-   * @param {Object} e - L'événement de soumission
+   * Handles form submission
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
     if (!hasChanges()) {
-      toast.info("Aucune modification détectée");
+      toast.info("No changes detected");
       return;
     }
 
-    
-    
-     dispatch(updateProfile(user?.id, {
+    // Prepare data and dispatch update
+    dispatch(updateProfile(user?.id, {
       first_name: formData.first_name,
       last_name: formData.last_name,
       email: formData.email,
@@ -101,7 +95,9 @@ function UpdateProfile({ user }) {
     }));
   };
 
-
+  /**
+   * Reset form fields when user data changes
+   */
   useEffect(() => {
     setFormData({
       first_name: user?.first_name || "",
@@ -116,21 +112,21 @@ function UpdateProfile({ user }) {
       <SheetTrigger asChild>
         <Button variant="outline" className="w-full flex items-center">
           <Edit className="mr-2" />
-          Modifier le profil
+          Edit Profile
         </Button>
       </SheetTrigger>
+      
       <SheetContent position="right" size="sm">
         <SheetHeader>
           <SheetTitle>
-            Modifier {user?.first_name} {user?.last_name}
+            Edit {user?.first_name} {user?.last_name}
           </SheetTitle>
-          <SheetDescription>Modifiez les détails de votre profil ci-dessous.</SheetDescription>
+          <SheetDescription>Update your profile details below.</SheetDescription>
         </SheetHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col px-4 gap-4 mt-4">
-
           <div>
-            <Label className='mb-3' htmlFor="first_name">Prénom</Label>
+            <Label className="mb-3" htmlFor="first_name">First Name</Label>
             <Input
               id="first_name"
               name="first_name"
@@ -140,7 +136,7 @@ function UpdateProfile({ user }) {
             />
           </div>
           <div>
-            <Label className='mb-3' htmlFor="last_name">Nom</Label>
+            <Label className="mb-3" htmlFor="last_name">Last Name</Label>
             <Input
               id="last_name"
               name="last_name"
@@ -150,7 +146,7 @@ function UpdateProfile({ user }) {
             />
           </div>
           <div>
-            <Label className='mb-3' htmlFor="email">Email</Label>
+            <Label className="mb-3" htmlFor="email">Email</Label>
             <Input
               id="email"
               name="email"
@@ -161,17 +157,18 @@ function UpdateProfile({ user }) {
             />
           </div>
           <div>
-            <Label className='mb-3' htmlFor="password">Nouveau mot de passe (Optionnel)</Label>
+            <Label className="mb-3" htmlFor="password">New Password (Optional)</Label>
             <Input
               id="password"
               name="password"
               type="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Laissez vide pour conserver le mot de passe actuel"
+              placeholder="Leave empty to keep current password"
               minLength="8"
             />
           </div>
+
           <Button
             type="submit"
             disabled={loading || !hasChanges()}
@@ -180,7 +177,7 @@ function UpdateProfile({ user }) {
             {loading ? (
               <Loader2 className="animate-spin w-5 h-5 mr-2" />
             ) : null}
-            {loading ? "Enregistrement..." : "Mettre à jour"}
+            {loading ? "Saving..." : "Update"}
           </Button>
         </form>
       </SheetContent>

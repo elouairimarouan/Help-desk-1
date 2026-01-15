@@ -23,13 +23,13 @@ function TicketItem({ ticket, fetchTickets }) {
   const getStatusLabel = (status) => {
     switch (status) {
       case "en_attent":
-        return "En attente";
+        return "Pending";
       case "resolu":
-        return "Résolu";
+        return "Resolved";
       case "en_cours":
-        return "En cours";
+        return "In progress";
       case "annuler":
-        return "Annulé";
+        return "Closed";
       default:
         return "Inconnu";
     }
@@ -38,9 +38,9 @@ function TicketItem({ ticket, fetchTickets }) {
     switch (status) {
       case "en_attent":
         return "bg-yellow-500 text-white rounded-sm p-2 flex justify-between items-center gap-2 ";
-      case "resolu":
-        return "bg-green-500 text-white rounded-sm p-2 flex justify-between  items-center gap-2 ";
       case "en_cours":
+        return "bg-green-500 text-white rounded-sm p-2 flex justify-between  items-center gap-2 ";
+      case "resolu":
         return "bg-blue-500 text-white rounded-sm p-2 flex justify-between  items-center gap-2 ";
       case "annuler":
           return "bg-red-600 text-white rounded-sm p-2 flex justify-between items-center gap-2 ";

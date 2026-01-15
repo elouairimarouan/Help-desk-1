@@ -76,12 +76,12 @@ export const staticTickets = [
     {id : 3, name : 'service3'},
   ]
   export const status = [
-    {value : "en_attent", name : 'En attent'},
-    {value : "en_cours", name : 'En cours'},
-    {value : "resolu", name : 'Resolu'},
-    {value : "annuler", name : 'Annuler'},
-   
-  ]
+    { value: "en_attent", name: "Pending" },
+    { value: "en_cours", name: "In Progress" },
+    { value: "resolu", name: "Resolved" },
+    { value: "annuler", name: "Closed" },
+  ];
+  
   export const profiles = [
     { name: "Admin" },
     { name: "User" },

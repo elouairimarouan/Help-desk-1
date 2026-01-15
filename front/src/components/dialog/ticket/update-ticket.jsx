@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label"; // Import Label
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import axiosInstance from "../../../utils/axiosInstance";
 import { services } from "../../../utils/data";
@@ -34,17 +34,18 @@ export function UpdateTicket({ ticket, fetchTickets }) {
     name: ticket.name || "",
     service: ticket.service || "",
     description: ticket.description || "",
-    status: ticket.status || "en_attent",
+    status: ticket.status || "pending",
   });
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     setFormData({
       name: ticket.name || "",
       service: ticket.service || "",
       description: ticket.description || "",
-      status: ticket.status || "en_attent",
+      status: ticket.status || "pending",
     });
   }, [ticket]);
 
@@ -62,7 +63,7 @@ export function UpdateTicket({ ticket, fetchTickets }) {
       setOpen(false);
       setFormData({ name: "", service: "", description: "", status: "en_attent" });
     } catch (error) {
-      console.error("Erreur lors de la mise à jour du ticket:", error);
+      console.error("Error updating ticket:", error);
       toast.error("Failed to update ticket. Please try again.");
     } finally {
       setLoading(false);
@@ -78,16 +79,16 @@ export function UpdateTicket({ ticket, fetchTickets }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Update Ticket Id: {ticket.id}</DialogTitle>
+          <DialogTitle>Update Ticket ID: {ticket.id}</DialogTitle>
           <DialogDescription>
-            Remplissez les informations du ticket et cliquez sur "Mettre à jour".
+            Fill out the ticket details and click "Update".
           </DialogDescription>
         </DialogHeader>
-      <  form onSubmit={handleSubmit} className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="name">Nom du ticket</Label>
+            <Label htmlFor="name">Ticket Name</Label>
             <Input
-              placeholder="Nom du ticket"
+              placeholder="Ticket name"
               id="name"
               name="name"
               value={formData.name}
@@ -102,7 +103,7 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               onValueChange={(value) => setFormData({ ...formData, service: value })}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Sélectionner un service" />
+                <SelectValue placeholder="Select a service" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -128,7 +129,7 @@ export function UpdateTicket({ ticket, fetchTickets }) {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="status">Update Statut</Label>
+            <Label htmlFor="status">Update Status</Label>
             <RadioGroup
               value={formData.status}
               onValueChange={(value) => setFormData({ ...formData, status: value })}
@@ -137,22 +138,22 @@ export function UpdateTicket({ ticket, fetchTickets }) {
                 <>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="en_attent" id="r3" />
-                    <Label htmlFor="r3">En attent</Label>
+                    <Label htmlFor="r3">Pending</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="en_cours" id="r1" />
-                    <Label htmlFor="r1">En cours</Label>
+                    <Label htmlFor="r1">In Progress</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="resolu" id="r2" />
-                    <Label htmlFor="r2">Resolu</Label>
+                    <Label htmlFor="r2">Resolved</Label>
                   </div>
                 </>
               )}
               {ticket.status === "en_attent" && (
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="annuler" id="r4" />
-                  <Label htmlFor="r4">Fermi</Label>
+                  <Label htmlFor="r4">Closed</Label>
                 </div>
               )}
             </RadioGroup>
@@ -163,9 +164,10 @@ export function UpdateTicket({ ticket, fetchTickets }) {
               {loading ? (
                 <>
                   <Loader2 className="animate-spin mr-2" />
+                  Updating...
                 </>
               ) : (
-                "Confirm"
+                "Update"
               )}
             </Button>
           </DialogFooter>

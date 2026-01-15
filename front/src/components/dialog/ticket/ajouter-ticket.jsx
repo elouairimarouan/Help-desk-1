@@ -15,7 +15,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar"
+} from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
@@ -57,8 +57,8 @@ export function AjouterTicket({ fetchTickets }) {
       const response = await axiosInstance.get("/users-list/");
       setUsers(response.data.users);
     } catch (err) {
-      console.error("Erreur lors de la récupération des utilisateurs:", err);
-      toast.error("Impossible de charger les utilisateurs.");
+      console.error("Error fetching users:", err);
+      toast.error("Unable to load users.");
     } finally {
       setIsUserLoading(false);
     }
@@ -88,7 +88,7 @@ export function AjouterTicket({ fetchTickets }) {
     e.preventDefault();
 
     if (!formData.service) {
-      toast.error("Veuillez sélectionner un service.");
+      toast.error("Please select a service.");
       return;
     }
 
@@ -98,14 +98,14 @@ export function AjouterTicket({ fetchTickets }) {
         ...formData,
         assigned_to: selectedUserId,
       });
-      toast.success("Le ticket a été ajouté avec succès.");
+      toast.success("Ticket created successfully.");
       fetchTickets();
       setOpen(false);
       setFormData({ name: "", service: "", description: "", assigned_to: null });
       setSelectedUserId(null);
     } catch (error) {
-      console.error("Erreur lors de la création du ticket:", error);
-      toast.error(error.response?.data?.message || "Échec de la création du ticket. Réessayez.");
+      console.error("Error creating ticket:", error);
+      toast.error(error.response?.data?.message || "Failed to create ticket. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -114,14 +114,14 @@ export function AjouterTicket({ fetchTickets }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full"><Plus /> Ajouter un Ticket</Button>
+        <Button variant="outline" className="w-full"><Plus /> Add Ticket</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Créer un Ticket</DialogTitle>
+          <DialogTitle>Create a Ticket</DialogTitle>
           <DialogDescription>
-            Remplissez les informations du ticket et cliquez sur "Ajouter".
+            Fill in the ticket details and click "Add".
           </DialogDescription>
         </DialogHeader>
 
@@ -131,7 +131,7 @@ export function AjouterTicket({ fetchTickets }) {
               {isUserLoading ? (
                 <Button disabled variant="outline" className="w-full justify-between">
                   <Loader2 className="animate-spin mr-2" />
-                  Chargement des utilisateurs...
+                  Loading users...
                 </Button>
               ) : (
                 <Button
@@ -139,18 +139,20 @@ export function AjouterTicket({ fetchTickets }) {
                   role="combobox"
                   aria-expanded={openSelect}
                   className="w-full justify-between"
-                  disabled={users.length === 0} // Disable if no users are loaded
+                  disabled={users.length === 0}
                 >
                   {selectedUserId
                     ? (() => {
                         const selectedUser = users.find((u) => u.id === selectedUserId);
-                        return <>
-                       
-                        {
-                          selectedUser ? `${selectedUser.first_name} ${selectedUser.last_name}` : "Sélectionner un utilisateur..."
-                        }</>
+                        return (
+                          <>
+                            {selectedUser
+                              ? `${selectedUser.first_name} ${selectedUser.last_name}`
+                              : "Select a user..."}
+                          </>
+                        );
                       })()
-                    : "Sélectionner un utilisateur..."}
+                    : "Select a user..."}
                   <ChevronsUpDown className="opacity-50" />
                 </Button>
               )}
@@ -158,26 +160,27 @@ export function AjouterTicket({ fetchTickets }) {
 
             <PopoverContent className="w-full p-0">
               <Command>
-                <CommandInput placeholder="Rechercher un utilisateur..." />
+                <CommandInput placeholder="Search user..." />
                 <CommandList>
-                  <CommandEmpty>Aucun utilisateur trouvé.</CommandEmpty>
+                  <CommandEmpty>No user found.</CommandEmpty>
                   <CommandGroup>
                     {users.map((u) => (
                       <CommandItem
                         key={u.id}
-                        value={String(u.id)} // Ensure consistent type
+                        value={String(u.id)}
                         onSelect={() => {
                           setSelectedUserId(u.id);
                           setOpenSelect(false);
                         }}
-                      > <Avatar className="h-5 w-5">
-                      <AvatarImage  src={u?.profile_image}/>
-                      <AvatarFallback>
-                        {u.first_name}
-                      </AvatarFallback>
-                    </Avatar>
+                      >
+                        <Avatar className="h-5 w-5 mr-2">
+                          <AvatarImage src={u?.profile_image} />
+                          <AvatarFallback>{u.first_name}</AvatarFallback>
+                        </Avatar>
                         {u.first_name} {u.last_name}
-                        <Check className={selectedUserId === u.id ? "opacity-100 ml-auto" : "opacity-0"} />
+                        <Check
+                          className={selectedUserId === u.id ? "opacity-100 ml-auto" : "opacity-0"}
+                        />
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -190,7 +193,7 @@ export function AjouterTicket({ fetchTickets }) {
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="flex flex-col gap-4">
             <Input
-              placeholder="Nom du ticket"
+              placeholder="Ticket name"
               id="name"
               name="name"
               value={formData.name}
@@ -202,7 +205,7 @@ export function AjouterTicket({ fetchTickets }) {
               onValueChange={(value) => setFormData({ ...formData, service: value })}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Sélectionner un service" />
+                <SelectValue placeholder="Select a service" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -230,10 +233,10 @@ export function AjouterTicket({ fetchTickets }) {
               {loading ? (
                 <>
                   <Loader2 className="animate-spin mr-2" />
-                  Ajout en cours...
+                  Adding...
                 </>
               ) : (
-                "Ajouter"
+                "Add"
               )}
             </Button>
           </DialogFooter>

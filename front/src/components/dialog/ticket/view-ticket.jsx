@@ -141,7 +141,7 @@ export function ViewTicket({ ticket }) {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="status">Statut du ticket</Label>
+            <Label htmlFor="status">Ticket Statistics</Label>
             <div className={`p-2 flex justify-between rounded-sm ${getStatusColor(formData.status)} `}>
 
                {getStatusLabel(ticket.status)}  {getStatusIcon(ticket.status)}

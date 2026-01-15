@@ -1,14 +1,11 @@
-
+"use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { TrendingUp } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import axiosInstance from "../utils/axiosInstance";
-
-
 
 export default function TicketStatistics() {
   const [data, setData] = useState({
@@ -18,18 +15,18 @@ export default function TicketStatistics() {
     error: null
   });
   const COLORS = [
-    'hsl(var(--chart-1))',
-    'hsl(var(--chart-2))',
-    'hsl(var(--chart-3))',
-    'hsl(var(--chart-4))',
-    'hsl(var(--chart-5))'
+    '#FFCC00', // Yellow
+    '#FF5733', // Red
+    '#33FF57', // Green
+    '#3357FF', // Blue
+    '#FF33A1'  // Pink
   ];
-  
+
   const statusLabels = {
-    en_attent: "En Attente",
-    en_cours: "En Cours",
-    resolu: "Résolu",
-    Annuler: "Annulé"
+    en_attent: "Pending",
+    en_cours: "In Progress",
+    resolu: "Resolved",
+    annuler: "Closed"
   };
 
   const fetchStatistics = async () => {
@@ -70,8 +67,8 @@ export default function TicketStatistics() {
     return (
       <Card className="w-full max-w-md mx-auto">
         <CardHeader>
-          <CardTitle>Statistiques des Tickets</CardTitle>
-          <CardDescription>Répartition par statut</CardDescription>
+          <CardTitle>Tickets Statistics </CardTitle>
+          <CardDescription>Breakdown by status</CardDescription>
         </CardHeader>
         <CardContent className="h-[300px] flex items-center justify-center">
           <Skeleton className="h-[250px] w-[250px] rounded-full" />
@@ -84,7 +81,7 @@ export default function TicketStatistics() {
     return (
       <Card className="w-full max-w-md mx-auto">
         <CardHeader>
-          <CardTitle>Statistiques des Tickets</CardTitle>
+          <CardTitle>Ticket Statistics</CardTitle>
         </CardHeader>
         <CardContent className="h-[100px] flex items-center justify-center text-red-500">
           {data.error}
@@ -94,10 +91,10 @@ export default function TicketStatistics() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto p-3">
       <CardHeader>
-        <CardTitle>Statistiques des Tickets</CardTitle>
-        <CardDescription>Répartition par statut</CardDescription>
+        <CardTitle>Ticket Statistics</CardTitle>
+        <CardDescription>Breakdown by status</CardDescription>
       </CardHeader>
       
       <CardContent className="flex justify-center">
@@ -125,16 +122,17 @@ export default function TicketStatistics() {
                 ))}
                 
                 <Label
-                  value={`${data.total}\nTickets`}
-                  position="center"
-                  style={{
-                    fontSize: '24px',
-                    fontWeight: 'bold',
-                    fill: 'hsl(var(--foreground))',
-                    textAnchor: 'middle',
-                    whiteSpace: 'pre-line'
-                  }}
-                />
+                    value={`${data.total}\nTickets`}
+                    position="center"
+                    style={{
+                      fontSize: '24px',
+                      fontWeight: 'bold',
+                      fill: '#333', // Change this to any color you prefer
+                      textAnchor: 'middle',
+                     whiteSpace: 'pre-line'
+                    }}
+                  />
+
               </Pie>
             </PieChart>
           </ResponsiveContainer>
@@ -144,7 +142,7 @@ export default function TicketStatistics() {
       <CardFooter className="flex flex-col gap-4">
         <div className="flex items-center gap-2 text-sm font-medium">
           <TrendingUp className="h-4 w-4 text-green-500" />
-          {chartData.find(item => item.rawStatus === "en_cours")?.value || 0} tickets en cours de traitement
+          {chartData.find(item => item.rawStatus === "en_cours")?.value || 0} tickets currently in progress
         </div>
         
         <div className="grid grid-cols-2 gap-4">
